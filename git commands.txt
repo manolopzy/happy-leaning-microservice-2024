@@ -13,3 +13,30 @@ To revert a git add, you can use the git restore --staged command, followed by t
 
 
 git commit -m "Initial commit of a microservice project: happy learning"
+
+
+git remote add origin https://github.com/manolopzy/happy-leaning-microservice-2024.git
+
+
+
+Verify the remote URL by running git remote -v. This shows you the URL of the remote repository you just added.
+Push your local commits to the remote repository using git push -u origin main (change “main” to your default branch if it’s different). The -u flag sets the upstream tracking information.
+Here’s the code block with the commands:
+
+git init
+git add .
+git commit -m "Initial commit"
+git remote add origin https://github.com/<your-username>/<repository-name>.git
+git remote -v
+git push -u origin main
+git push -u origin master
+
+
+echo "# happy-leaning-microservice-2024" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/manolopzy/happy-leaning-microservice-2024.git
+git push -u origin main
+

@@ -1,0 +1,35 @@
+
+1, Dependency on the configuration server side
+<dependency>
+	<groupId>org.springframework.cloud</groupId>
+	<artifactId>spring-cloud-config-server</artifactId>
+</dependency>
+2, Dependency on the configuration client side
+<dependency>
+	<groupId>org.springframework.cloud</groupId>
+	<artifactId>spring-cloud-starter-config</artifactId>
+</dependency>
+
+3, Creating a repository for configuration file storage and searching
+Assign the following configuration in the configuration server's property file
+# Repository Location in Github
+spring.cloud.config.server.git.uri = https://github.com/manolopzy/springboot-microservice.git
+spring.cloud.config.server.git.searchPaths = config-data
+# Github username
+spring.cloud.config.server.git.username=yourUserName
+# Github Password
+spring.cloud.config.server.git.password=yourPassword
+# Github default branch
+spring.cloud.config.server.git.default-label=master
+
+
+4, Property file configuration on the client side
+#this name should be the same as the configuration file name in your file repository
+spring.application.name=happy-learning-registryservice
+spring.config.import=configserver:http://localhost:8020
+#spring.cloud.config.uri=http://localhost:8888
+spring.cloud.config.username=user
+spring.cloud.config.password=111111
+
+5, How to read multiple configuration files?
+
