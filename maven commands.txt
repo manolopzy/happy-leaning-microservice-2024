@@ -1,0 +1,7 @@
+1, Building the sub projects
+mvn install
+
+2, Building an docker image of a spring boot project using maven
+mvn spring-boot:build-image
+or alternatively (not tried)
+mvn clean package docker:build

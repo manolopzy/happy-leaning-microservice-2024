@@ -1,0 +1,36 @@
+# Specifies the version of format of the docker compose file
+# "version" is obsoleteck
+# version: '3' 
+#microservice1 and microservice2 are built from their respective directories (./microservice1 and ./microservice2) and expose ports 8080 and 8081, respectively. Both services depend on the mysql service and set the SPRING_PROFILES_ACTIVE environment variable to docker.
+# Using "services" to start to add different microservices
+
+services:
+  gateway:
+    build: ./gateway
+    ports:
+      - "8084:8084"
+# This will make the "mysql" service launched before the "gateway" service
+    depends_on:
+      - registryservice
+      - mysql
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+  registryservice:
+# "registryservice" microservice is built from its directory relative to the docker-compose file under which there should be a Dockerfile defined for the building process
+    build: ./registryservice
+# The exposing port
+    ports:
+      - "8099:8099"
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: manolo
+      MYSQL_DATABASE: test
+      MYSQL_USER: jose
+      MYSQL_PASSWORD: jose
+    volumes:
+      - mysql-data:/var/lib/mysql
+volumes:
+  mysql-data:

@@ -1,0 +1,15 @@
+
+git init 
+
+git status
+
+git add .
+
+If you want to reverse the "git add ." command, use "git reset" to withdraw the operation
+you can use git reset without specifying a file name to unstage all changes:
+git reset
+
+To revert a git add, you can use the git restore --staged command, followed by the name of the affected file.
+
+
+git commit -m "Initial commit of a microservice project: happy learning"

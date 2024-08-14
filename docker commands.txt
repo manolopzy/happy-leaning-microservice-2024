@@ -1,0 +1,167 @@
+Part 1 Docker
+
+1, listing all locally built images with the following command
+docker images
+
+REPOSITORY                            TAG              IMAGE ID       CREATED        SIZE
+paketobuildpacks/run-jammy-base       latest           078d8de43793   4 days ago     111MB
+paketobuildpacks/run-jammy-base       <none>           bf4e5592fd5d   2 months ago   104MB
+mongo                                 latest           2f732130b5c3   2 months ago   797MB
+redis                                 latest           1a83fd5edeed   2 months ago   117MB
+cassandra                             latest           948856e4661a   2 months ago   354MB
+mysql                                 latest           fcd86ff8ce8c   3 months ago   578MB
+com.worldexplorers                    gateway          c33ca9708d78   44 years ago   422MB
+
+2, Pulling a java 21 image
+docker pull apache/solr-nightly:9.7.0-SNAPSHOT-java21
+REPOSITORY                            TAG                     IMAGE ID       CREATED        SIZE
+apache/solr-nightly                   9.7.0-SNAPSHOT-java21   5270a6cc5f5c   32 hours ago   607MB
+
+3, Building an image
+a: using maven with spring boot
+mvn spring-boot:build-image
+b: specifying a tag of the image
+mvn spring-boot:build-image \-Dspring-boot.build-iamge.imageName = happylearning-serviceregistry
+c: using docker directly
+docker build . -t worldexplorers/happylearning:happylearning-serviceregistry
+The point here refers to the relative path where the Dockerfile locates.
+
+REPOSITORY                            TAG                             IMAGE ID       CREATED          SIZE
+worldexplorers/happylearning          happylearning-serviceregistry   83e54eb11749   45 seconds ago   568MB
+
+4, Running an image with its environment variables
+
+The -it flag in the Docker command is used to create a new container from an existing Docker image and allocate a pseudo-TTY and keep STDIN open. The breakdown is as follows:
+-i means “interactive” mode, which allocates a pseudo-TTY (i.e., a virtual terminal) and keeps STDIN open. This allows you to interact with the container, for example, by typing commands and seeing the output.
+-t means “pseudo-TTY” mode, which allocates a pseudo-TTY and sets the TERM environment variable.
+When you use the -it flag, Docker creates a new container from the specified image and allocates a pseudo-TTY. This allows you to interact with the container as if you were logged in directly. The container will remain running until you manually stop or kill it.
+
+When using the docker command, the --name option is used to specify a name for a container.
+
+docker run -it --name mysql mysql/mysql-server:latest
+docker run -it --name mysql mysql:latest
+
+The right syntax with environment variables:
+docker run -e MY_VAR=value1 -e ANOTHER_VAR=value2 image_name
+
+docker run -e MYSQL_ROOT_PASSWORD=manolo -it mysql:latest
+
+docker run -e MY_VAR=value image_name
+
+docker run -v "$PWD/data":/var/lib/mysql --user 1000:1000 --name container-mysql -e MYSQL_ROOT_PASSWORD=manolo -d mysql:tag
+
+
+5, Removing image
+docker rmi <image_id>
+If you want to force removal of an image without prompting for confirmation, use 
+docker rmi -f <image_id>.
+
+Part 2 Docker Compose
+1, Checking if docker compose is installed on your machine by viewing its version
+docker-compose --version
+Docker Compose version v2.27.0-desktop.2
+
+Compile and package each microservice into a JAR file.
+Run docker-compose up -d to start all services in detached mode.
+docker-compose up -d
+Verify that the services are running by checking the logs or using docker-compose exec to access the container’s shell.
+docker-compose exec
+Stopping docker compose launched services
+docker-compose stop
+
+
+Ctrl+C to quit the no detached mode and stop the services
+
+2, Rebuilding the images when running docker-compose up command
+docker-compose up --build
+
+An example of a docker-compose.yml file
+version: '3'
+services:
+  gateway:
+    build: .
+    image: my-gateway:latest
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DB_USERNAME: username
+      DB_PASSWORD: password
+    depends_on:
+      - db
+      - redis
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydatabase
+
+  redis:
+    image: redis:alpine
+
+    
+services:
+  gateway:
+    build: ./gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - config-service
+      - bank-account-service
+
+  config-service:
+    build: ./config-service
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+
+  bank-account-service:
+    build: ./bank-account-service
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+
+  # Optional: Database or other shared services
+  database:
+    image: postgres
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
+  
+  
+  
+services:
+  gateway:
+    build: ./gateway
+    ports:
+      - "8084:8084"
+# This will make the "mysql" service launched before the "gateway" service
+	depends_on:
+      - registryservice
+      - mysql
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+  registryservice:
+# "registryservice" microservice is built from its directory relative to the docker-compose file under which there should be a Dockerfile defined for the building process
+    build: ./registryservice
+# The exposing port
+    ports:
+      - "8099:8099"
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: manolo
+      MYSQL_DATABASE: test
+      MYSQL_USER: jose
+      MYSQL_PASSWORD: jose
+    volumes:
+      - mysql-data:/var/lib/mysql
+volumes:
+  mysql-data:
