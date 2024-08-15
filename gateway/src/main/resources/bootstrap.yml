@@ -1,0 +1,7 @@
+spring:
+#there are default, dev, prod choices
+  profiles: dev
+  cloud:
+    config:
+      uri: configserver:http://localhost:8020
+      profile: dev, dev-rabbitmqClient, dev-redis, dev-eureka, dev-db, dev-mq
