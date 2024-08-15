@@ -67,6 +67,11 @@
 			<artifactId>querydsl-apt</artifactId>
 		</dependency>
 		
+		<!-- This dependency is used for retrieving configuration data from a config server-->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
