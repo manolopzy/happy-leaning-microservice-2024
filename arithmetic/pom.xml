@@ -1,25 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <artifactId>arithmetic</artifactId>
-    <packaging>jar</packaging>
+	<artifactId>arithmetic</artifactId>
+	<packaging>jar</packaging>
 
-    <name>Spring Boot Blank Project (from https://github.com/making/spring-boot-blank)</name>
+	<name>Spring Boot Blank Project (from
+		https://github.com/making/spring-boot-blank)</name>
 
-    <parent>
-        <groupId>com.worldexplorers</groupId>
-        <artifactId>happy-learning</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-    </parent>
+	<parent>
+		<groupId>com.worldexplorers</groupId>
+		<artifactId>happy-learning</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <start-class>happylearning.arithmeticservice.HappyLearningArithmeticApplication</start-class>
-        <spring-cloud.version>2023.0.2</spring-cloud.version>
-        
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<start-class>
+			happylearning.arithmeticservice.HappyLearningArithmeticApplication</start-class>
+		<spring-cloud.version>2023.0.2</spring-cloud.version>
+
 	</properties>
 	<dependencies>
+		<!-- This dependency is used for retrieving configuration data from a
+		config server-->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
@@ -66,12 +77,8 @@
 			<groupId>com.querydsl</groupId>
 			<artifactId>querydsl-apt</artifactId>
 		</dependency>
-		
-		<!-- This dependency is used for retrieving configuration data from a config server-->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-config</artifactId>
-		</dependency>
+
+
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
@@ -99,7 +106,7 @@
 					</excludes>
 				</configuration>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>com.mysema.maven</groupId>
 				<artifactId>apt-maven-plugin</artifactId>
@@ -110,8 +117,10 @@
 							<goal>process</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>target/generated-sources/annotations</outputDirectory>
-							<processor>org.springframework.data.mongodb.repository.support.MongoAnnotationProcessor</processor>
+							<outputDirectory>
+								target/generated-sources/annotations</outputDirectory>
+							<processor>
+								org.springframework.data.mongodb.repository.support.MongoAnnotationProcessor</processor>
 						</configuration>
 					</execution>
 				</executions>

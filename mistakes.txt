@@ -1,0 +1,6 @@
+1, Spring cloud config server
+Problem: The clients seems do not connect and retrieve configuration files from the configuration server
+Answer: The dependency setting up is correct, the mistake is that the application name does not match the one used in the files on the server side, 
+for example
+ happy.learning.gateway application name client side
+ happy-learning-gateway.yml properties file name server side

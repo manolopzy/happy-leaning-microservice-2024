@@ -1,6 +1,5 @@
 package happylearning.arithmeticgamification.client;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -26,7 +25,7 @@ class ArithmeticResultAttemptClientImpl implements ArithmeticResultAttemptClient
      */
     private final String arithmeticHost;
 
-    @Autowired
+    
     public ArithmeticResultAttemptClientImpl(final RestTemplate restTemplate,
                                                  @Value("${arithmeticHost}") final String arithmeticHost) {
         this.restTemplate = restTemplate;
