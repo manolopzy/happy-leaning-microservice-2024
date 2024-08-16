@@ -56,3 +56,13 @@ docker rmi <image_id>
 If you want to force removal of an image without prompting for confirmation, use 
 docker rmi -f <image_id>.
 
+
+6, Listing containers
+List all containers (running and stopped):
+docker ps -a
+
+List only running containers:
+docker ps
+
+List only stopped containers:
+docker ps -a --filter status=exited

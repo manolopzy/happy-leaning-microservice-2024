@@ -5,3 +5,7 @@ mvn install
 mvn spring-boot:build-image
 or alternatively (not tried)
 mvn clean package docker:build
+
+3, Cleaning builds
+mvn clean
+This commands will eliminate all jars built previouslym

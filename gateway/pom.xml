@@ -7,8 +7,7 @@
 	<artifactId>gateway</artifactId>
 	<packaging>jar</packaging>
 
-	<name>Spring Boot Blank Project (from
-		https://github.com/making/spring-boot-blank)</name>
+	<name>Spring Boot Gateway sub project of Happy-Learning</name>
 
 	<parent>
 		<groupId>com.worldexplorers</groupId>
@@ -20,7 +19,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<start-class>
 			com.worldexplorers.happylearning.gateway.HappyLearningGatewayApplication</start-class>
-		<spring-cloud.version>2023.0.1</spring-cloud.version>
+		<spring-cloud.version>2023.0.2</spring-cloud.version>
 	</properties>
 
 	<dependencies>
