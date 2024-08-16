@@ -49,13 +49,19 @@ public class RedisStandaloneConfig {
 	@Value("${redis.client.pool.minIdle}")
 	private String minIdle;
 	
-	
+	@Value("${spring.data.redis.host}")
+	private String host;
+	@Value("${spring.data.redis.port}")
+	private String port;
 	@Bean
 	JedisConnectionFactory redisConnectionFactory() {
 		// if there is only one redis server (standalone)
 		// used for setting up {@link RedisConnection} via {@link
 		// RedisConnectionFactory}
-		RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
+		RedisStandaloneConfiguration configuration = 
+				new RedisStandaloneConfiguration();
+		configuration.setHostName(host);
+		configuration.setPort(Integer.parseInt(port));
 		JedisConnectionFactory jedisConFactory = new JedisConnectionFactory(configuration);
 		return jedisConFactory;
 	}

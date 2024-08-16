@@ -17,6 +17,43 @@ Ctrl+C to quit the no detached mode and stop the services
 2, Rebuilding the images when running docker-compose up command
 docker-compose up --build
 
+
+
+3, How to control the images launching order
+
+The solution for detecting the ready state of a service is 
+to use the condition attribute with one of the following options:
+
+service_started
+service_healthy
+This specifies that a dependency is expected to be “healthy”, 
+which is defined with health check, before starting a 
+dependent service.
+service_completed_successfully
+This specifies that a dependency is expected to run to 
+successful completion before starting a dependent service.
+Example
+
+services:
+  web:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+      redis:
+        condition: service_started
+  redis:
+    image: redis
+  db:
+    image: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+
 An example of a docker-compose.yml file
 version: '3'
 services:
@@ -107,3 +144,69 @@ services:
       - mysql-data:/var/lib/mysql
 volumes:
   mysql-data:
+  
+version: "3.0"
+services:
+  gateway:
+    build:
+      context: ./roncoo-education-gateway
+      args:
+        JAVA_OPTS: '-Xmn256M -Xmx256M'
+        RUN_ARGS: '--spring.profiles.active=demo --spring.cloud.nacos.server-addr=localhost:8848'
+    image: roncoo-education-gateway
+    container_name: gateway
+    restart: always
+    volumes:
+      - /home/roncoo/logs/gateway:/root/logs/gateway
+    networks:
+      - education
+    ports:
+      - "7700:7700"
+  service-system:
+    build:
+      context: ./roncoo-education-service/roncoo-education-service-system
+      args:
+        JAVA_OPTS: '-Xmn256M -Xmx256M'
+        RUN_ARGS: '--spring.profiles.active=demo --spring.cloud.nacos.server-addr=localhost:8848'
+    image: roncoo-education-service-system
+    container_name: system
+    restart: always
+    volumes:
+      - /home/roncoo/logs/system:/root/logs/system
+    networks:
+      - education
+    ports:
+      - "7710:7710"
+  service-user:
+    build:
+      context: ./roncoo-education-service/roncoo-education-service-user
+      args:
+        JAVA_OPTS: '-Xmn256M -Xmx256M'
+        RUN_ARGS: '--spring.profiles.active=demo --spring.cloud.nacos.server-addr=localhost:8848'
+    image: roncoo-education-service-user
+    container_name: user
+    restart: always
+    volumes:
+      - /home/roncoo/logs/user:/root/logs/user
+    networks:
+      - education
+    ports:
+      - "7720:7720"
+  service-course:
+    build:
+      context: ./roncoo-education-service/roncoo-education-service-course
+      args:
+        JAVA_OPTS: '-Xmn256M -Xmx256M'
+        RUN_ARGS: '--spring.profiles.active=demo --spring.cloud.nacos.server-addr=localhost:8848'
+    image: roncoo-education-service-course
+    container_name: course
+    restart: always
+    volumes:
+      - /home/roncoo/logs/course:/root/logs/course
+    networks:
+      - education
+    ports:
+      - "7730:7730"
+networks:
+  education:
+    driver: host

@@ -20,7 +20,7 @@
 		<start-class>
 			happylearning.arithmeticservice.HappyLearningArithmeticApplication</start-class>
 		<spring-cloud.version>2023.0.2</spring-cloud.version>
-		<java.version>17</java.version>
+		
 	</properties>
 	<dependencies>
 		<!-- This dependency is used for retrieving configuration data from a

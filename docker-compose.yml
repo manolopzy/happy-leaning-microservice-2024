@@ -11,6 +11,7 @@ services:
       - "8020:8020"
     environment:
       SPRING_PROFILES_ACTIVE: dev
+#Provides health check logic, so that other services that depend on this one can use this logic to check if this service is in healthy status for providing services to others
     healthcheck:
       test: "curl --fail --silent user:111111@192.168.56.1:8020/actuator/health/readiness | grep UP || exit 1"
       interval: 5s
@@ -24,6 +25,7 @@ services:
 # This will make the "mysql" service launched before the "gateway" service
     depends_on:
       configserver:
+      #The gateway will startup only if the configuration server passes the health check
         condition: service_healthy
       registryservice:
         condition: service_started

@@ -1,4 +1,4 @@
-FROM openjdk:17-jdk-oracle
+FROM openjdk:21-jdk-oracle
 MAINTAINER zhenyi
 ARG JAVA_OPTS="-Xmx128M"
 ENV JAVA_OPTS=$JAVA_OPTS
