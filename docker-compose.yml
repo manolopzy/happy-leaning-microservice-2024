@@ -5,24 +5,57 @@
 # Using "services" to start to add different microservices
 
 services:
+  configserver:
+    build: ./configserver
+    ports:
+      - "8020:8020"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
   gateway:
     build: ./gateway
     ports:
       - "8084:8084"
 # This will make the "mysql" service launched before the "gateway" service
     depends_on:
+      - configserver
       - registryservice
       - mysql
     environment:
-      SPRING_PROFILES_ACTIVE: prod
+      SPRING_PROFILES_ACTIVE: dev
   registryservice:
 # "registryservice" microservice is built from its directory relative to the docker-compose file under which there should be a Dockerfile defined for the building process
     build: ./registryservice
 # The exposing port
     ports:
       - "8099:8099"
+    depends_on:
+      - configserver
     environment:
-      SPRING_PROFILES_ACTIVE: prod
+      SPRING_PROFILES_ACTIVE: dev
+  arithmetic:
+# "arithmetic" microservice is built from its directory relative to the docker-compose file under which there should be a Dockerfile defined for the building process
+    build: ./arithmetic
+# The exposing port
+    ports:
+      - "8081:8081"
+    depends_on:
+      - configserver
+      - registryserver
+      - gateway
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+  arithmeticgamification:
+# "arithmeticgamification" microservice is built from its directory relative to the docker-compose file under which there should be a Dockerfile defined for the building process
+    build: ./arithmeticgamification
+# The exposing port
+    ports:
+      - "8086:8086"
+    depends_on:
+      - configserver
+      - registryserver
+      - gateway
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
   mysql:
     image: mysql:latest
     environment:
