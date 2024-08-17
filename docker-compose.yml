@@ -12,12 +12,14 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: dev
 #Provides health check logic, so that other services that depend on this one can use this logic to check if this service is in healthy status for providing services to others
+    #test: "curl --fail --silent user:111111@192.168.56.1:8020/actuator/health/readiness | grep UP || exit 1"
     healthcheck:
-      test: "curl --fail --silent user:111111@192.168.56.1:8020/actuator/health/readiness | grep UP || exit 1"
+      test: "curl --fail --silent user:111111@127.0.0.1:8020/actuator/health/readiness | grep UP || exit 1"
       interval: 5s
       timeout: 3s
       retries: 3
       start_period: 5s
+    #network_mode: host
   gateway:
     build: ./gateway
     ports:
@@ -33,6 +35,7 @@ services:
         condition: service_started
     environment:
       SPRING_PROFILES_ACTIVE: dev
+    #network_mode: host
   registryservice:
 # "registryservice" microservice is built from its directory relative to the docker-compose file under which there should be a Dockerfile defined for the building process
     build: ./registryservice
@@ -44,6 +47,7 @@ services:
         condition: service_healthy
     environment:
       SPRING_PROFILES_ACTIVE: dev
+    #network_mode: host
   arithmetic:
 # "arithmetic" microservice is built from its directory relative to the docker-compose file under which there should be a Dockerfile defined for the building process
     build: ./arithmetic
@@ -59,6 +63,7 @@ services:
         condition: service_started
     environment:
       SPRING_PROFILES_ACTIVE: dev
+    #network_mode: host
   arithmeticgamification:
 # "arithmeticgamification" microservice is built from its directory relative to the docker-compose file under which there should be a Dockerfile defined for the building process
     build: ./arithmeticgamification
@@ -74,6 +79,7 @@ services:
         condition: service_started
     environment:
       SPRING_PROFILES_ACTIVE: dev
+    #network_mode: host
   mysql:
     image: mysql:latest
     environment:
@@ -83,5 +89,6 @@ services:
       MYSQL_PASSWORD: jose
     volumes:
       - mysql-data:/var/lib/mysql
+    #network_mode: host
 volumes:
   mysql-data:
