@@ -115,7 +115,8 @@ public class GameServiceImpl implements GameService{
 	@Override
 	public List<LeaderBoardRow> getCurrentLeaderBoard() {
 		log.info("get leader board data");
-		return gameRepository.getLeaderBoards(6);
+		List<LeaderBoardRow> rows = gameRepository.getLeaderBoards(6);
+		return rows;
 	}
 	
 	@Override

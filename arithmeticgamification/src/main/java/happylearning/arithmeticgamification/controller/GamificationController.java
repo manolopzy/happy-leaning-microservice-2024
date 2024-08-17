@@ -42,7 +42,7 @@ class GamificationController {
     public ResponseEntity<List<LeaderBoardRow>> getLeaderBoardRows(){
     	List<LeaderBoardRow> currentLeaderBoard = 
     			gameService.getCurrentLeaderBoard();
-    	log.info("return {} number of leader board records", currentLeaderBoard.size());
+    	log.info("return {} number of leader board records", currentLeaderBoard == null ? 0 : currentLeaderBoard.size());
     	return ResponseEntity.ok(currentLeaderBoard);
     }
 }
