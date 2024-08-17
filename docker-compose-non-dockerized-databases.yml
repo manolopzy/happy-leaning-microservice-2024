@@ -61,8 +61,6 @@ services:
         condition: service_started
       gateway:
         condition: service_started
-      rabbitmq:
-        condition: service_started
     environment:
       SPRING_PROFILES_ACTIVE: dev
     #network_mode: host
@@ -79,26 +77,9 @@ services:
         condition: service_started
       gateway:
         condition: service_started
-      redis:
-        condition: service_started
-      rabbitmq:
-        condition: service_started
     environment:
       SPRING_PROFILES_ACTIVE: dev
-      spring.redis.host: redis
     #network_mode: host
-  redis:
-    image: redis:latest
-    ports:
-      - "6379:6379"
-  #mongo:
-    #image: mongo:latest
-   # ports:
-   #   - "27017:27017"
-  rabbitmq:
-    image: rabbitmq:latest
-    ports:
-      - "5672:5672"
   mysql:
     image: mysql:latest
     environment:
