@@ -1,0 +1,113 @@
+# Specifies the version of format of the docker compose file
+# "version" is obsoleteck
+# version: '3' 
+#microservice1 and microservice2 are built from their respective directories (./microservice1 and ./microservice2) and expose ports 8080 and 8081, respectively. Both services depend on the mysql service and set the SPRING_PROFILES_ACTIVE environment variable to docker.
+# Using "services" to start to add different microservices
+
+services:
+  configserver:
+    build: ./configserver
+    ports:
+      - "8020:8020"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+#Provides health check logic, so that other services that depend on this one can use this logic to check if this service is in healthy status for providing services to others
+    #test: "curl --fail --silent user:111111@192.168.56.1:8020/actuator/health/readiness | grep UP || exit 1"
+    healthcheck:
+      test: "curl --fail --silent user:111111@127.0.0.1:8020/actuator/health/readiness | grep UP || exit 1"
+      interval: 5s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    #network_mode: host
+  gateway:
+    build: ./gateway
+    ports:
+      - "8084:8084"
+# This will make the "mysql" service launched before the "gateway" service
+    depends_on:
+      configserver:
+      #The gateway will startup only if the configuration server passes the health check
+        condition: service_healthy
+      registryservice:
+        condition: service_started
+      mysql:
+        condition: service_started
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+    #network_mode: host
+  registryservice:
+# "registryservice" microservice is built from its directory relative to the docker-compose file under which there should be a Dockerfile defined for the building process
+    build: ./registryservice
+# The exposing port
+    ports:
+      - "8099:8099"
+    depends_on:
+      configserver:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+    #network_mode: host
+  arithmetic:
+# "arithmetic" microservice is built from its directory relative to the docker-compose file under which there should be a Dockerfile defined for the building process
+    build: ./arithmetic
+# The exposing port
+    ports:
+      - "8081:8081"
+    depends_on:
+      configserver:
+        condition: service_healthy
+      registryservice:
+        condition: service_started
+      gateway:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+    #network_mode: host
+  arithmeticgamification:
+# "arithmeticgamification" microservice is built from its directory relative to the docker-compose file under which there should be a Dockerfile defined for the building process
+    build: ./arithmeticgamification
+# The exposing port
+    ports:
+      - "8086:8086"
+    depends_on:
+      configserver:
+        condition: service_healthy
+      registryservice:
+        condition: service_started
+      gateway:
+        condition: service_started
+      redis:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      spring.redis.host: redis
+    #network_mode: host
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+  #mongo:
+    #image: mongo:latest
+   # ports:
+   #   - "27017:27017"
+  rabbitmq:
+    image: rabbitmq:latest
+    ports:
+      - "5672:5672"
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: manolo
+      MYSQL_DATABASE: test
+      MYSQL_USER: jose
+      MYSQL_PASSWORD: jose
+    volumes:
+      - mysql-data:/var/lib/mysql
+    #network_mode: host
+volumes:
+  mysql-data:
