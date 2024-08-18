@@ -32,6 +32,16 @@ dependent service.
 service_completed_successfully
 This specifies that a dependency is expected to run to 
 successful completion before starting a dependent service.
+
+4, Running a specific docker-compose file
+
+docker compose -f docker-compose-non-dockerized-databases.yml up
+
+If you want to run the containers in the background, add the -d option:
+docker compose -f docker-compose-with-dockernized-databasess.yml -d up
+
+
+
 Example
 
 services:
