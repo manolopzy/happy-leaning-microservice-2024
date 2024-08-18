@@ -35,7 +35,7 @@ successful completion before starting a dependent service.
 
 4, Running a specific docker-compose file
 
-docker compose -f docker-compose-non-dockerized-databases.yml up
+docker compose -f docker-compose-non-dockerized-databases.yml up --build
 
 If you want to run the containers in the background, add the -d option:
 docker compose -f docker-compose-with-dockernized-databasess.yml -d up
