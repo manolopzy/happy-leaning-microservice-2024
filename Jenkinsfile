@@ -2,16 +2,26 @@ pipeline {
     agent any
     stages {
         stage('Clone') {
-            git 'https://github.com/manolopzy/happy-leaning-microservice-2024.git'
+			//Even there is only one step, it must be surrounded by "steps" in a newer version of Jenkins
+			steps {
+				git 'https://github.com/manolopzy/happy-leaning-microservice-2024.git'
+			}
         }
         stage('Build') {
-            sh 'mvn clean package'
+			steps {
+				sh 'mvn clean package'
+			}
         }
         stage('Test') {
-            sh 'mvn test'
+			steps {
+				sh 'mvn test'
+			}
         }
         stage('Package') {
-            sh 'mvn package'
+            
+            steps {
+				sh 'mvn package'
+			}
         }
         
         
@@ -34,7 +44,9 @@ pipeline {
             // sh 'docker compose build'
         	// sh 'docker tag spring-boot-app:<version> <your-docker-hub-username>/spring-boot-app:<version>'
         	// sh 'docker push <your-docker-hub-username>/spring-boot-app:<version>'
-            sh 'docker compose build'
+        	steps {
+				 sh 'docker compose build'
+			}
         }
     }
 }
