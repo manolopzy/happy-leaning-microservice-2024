@@ -19,4 +19,5 @@ COPY target/*.jar happylearning-arithmetic.jar
 #you can override CMD by passing a different command when starting 
 #the container.
 # CMD ["java", "-jar", "happylearning-gateway.jar"]
+#ENTRYPOINT ["java","-jar", "happylearning-arithmetic.jar"]
 ENTRYPOINT ["sh","-c","java $JAVA_OPTS -jar /happylearning-arithmetic.jar $RUN_ARGS"]
