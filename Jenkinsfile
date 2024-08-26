@@ -1,3 +1,4 @@
+//Any commands listed here can be run locally to verify their correctness
 pipeline {
     agent any
     stages {
@@ -9,7 +10,8 @@ pipeline {
         }
         stage('Build') {
 			steps {
-				sh 'mvn clean package'
+				//sh 'mvn clean package'
+				sh 'mvn install'
 			}
         }
         stage('Test') {
@@ -17,12 +19,11 @@ pipeline {
 				sh 'mvn test'
 			}
         }
-        stage('Package') {
-            
-            steps {
-				sh 'mvn package'
-			}
-        }
+        //stage('Package') {
+            //steps {
+			//	sh 'mvn package'
+			//}
+        //}
         
         
         //stage('Build and Push Docker Images') {

@@ -76,8 +76,6 @@
 			<groupId>com.querydsl</groupId>
 			<artifactId>querydsl-apt</artifactId>
 		</dependency>
-
-
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
