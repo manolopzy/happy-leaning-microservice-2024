@@ -13,7 +13,22 @@ pipeline {
         stage('Package') {
             sh 'mvn package'
         }
-        stage('Deploy') {
+        
+        
+        stage('Build and Push Docker Images') {
+	      steps {
+			//"spring-boot-app1" is the service name defined in your docker-compose file
+	        //sh 'docker compose build spring-boot-app1'
+	        //sh 'docker tag spring-boot-app1:<version> <your-docker-hub-username>/spring-boot-app1:<version>'
+	        //sh 'docker push <your-docker-hub-username>/spring-boot-app1:<version>'
+	
+	        //sh 'docker compose build spring-boot-app2'
+	        //sh 'docker tag spring-boot-app2:<version> <your-docker-hub-username>/spring-boot-app2:<version>'
+	        //sh 'docker push <your-docker-hub-username>/spring-boot-app2:<version>'
+	      }
+    	}
+    	
+    	stage('Deploy') {
             // Replace with your deployment script
             // For example, to deploy to Docker:
             // sh 'docker compose build'
