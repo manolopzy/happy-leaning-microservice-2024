@@ -25,8 +25,8 @@ pipeline {
         }
         
         
-        stage('Build and Push Docker Images') {
-	      steps {
+        //stage('Build and Push Docker Images') {
+	      //steps {
 			//"spring-boot-app1" is the service name defined in your docker-compose file
 	        //sh 'docker compose build spring-boot-app1'
 	        //sh 'docker tag spring-boot-app1:<version> <your-docker-hub-username>/spring-boot-app1:<version>'
@@ -35,8 +35,8 @@ pipeline {
 	        //sh 'docker compose build spring-boot-app2'
 	        //sh 'docker tag spring-boot-app2:<version> <your-docker-hub-username>/spring-boot-app2:<version>'
 	        //sh 'docker push <your-docker-hub-username>/spring-boot-app2:<version>'
-	      }
-    	}
+	      //}
+    	//}
     	
     	stage('Deploy') {
             // Replace with your deployment script
