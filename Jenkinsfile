@@ -11,12 +11,13 @@ pipeline {
         stage('Build') {
 			steps {
 				//sh 'mvn clean package'
-				sh 'mvn install'
+				//sh is for linux shell, bat is for Windows known as batch command file
+				bat 'mvn install'
 			}
         }
         stage('Test') {
 			steps {
-				sh 'mvn test'
+				bat 'mvn test'
 			}
         }
         //stage('Package') {
@@ -46,7 +47,7 @@ pipeline {
         	// sh 'docker tag spring-boot-app:<version> <your-docker-hub-username>/spring-boot-app:<version>'
         	// sh 'docker push <your-docker-hub-username>/spring-boot-app:<version>'
         	steps {
-				 sh 'docker compose build'
+				 bat 'docker compose build'
 			}
         }
     }
