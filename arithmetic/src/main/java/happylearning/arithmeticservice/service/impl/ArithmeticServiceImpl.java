@@ -3,11 +3,13 @@ package happylearning.arithmeticservice.service.impl;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import happylearning.arithmeticservice.entity.ArithmeticAttempt;
 import happylearning.arithmeticservice.entity.ArithmeticOperation;
-import happylearning.arithmeticservice.entity.QArithmeticAttempt;
 import happylearning.arithmeticservice.event.ArithmeticAttemptEvent;
 import happylearning.arithmeticservice.event.RabbitEventDispatcher;
 import happylearning.arithmeticservice.repository.ArithmeticAttemptRepository;
@@ -17,7 +19,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class ArithmeticServiceImpl implements ArithmeticService {
-	
+	@Autowired
+	private MongoTemplate mongoTemplate;
 	@Autowired
 	private ArithmeticAttemptRepository arithmeticAttemptRepository;
 	
@@ -72,8 +75,19 @@ public class ArithmeticServiceImpl implements ArithmeticService {
 
 	@Override
 	public Iterable<ArithmeticAttempt> getArithmeticAttempts(String alias) {
-		QArithmeticAttempt qQuery = new QArithmeticAttempt("arithmeticAttempt");
-		Iterable<ArithmeticAttempt> result = arithmeticAttemptRepository.findAll(qQuery.user.alias.eq(alias));
+		//method 1
+//		QArithmeticAttempt qQuery = new QArithmeticAttempt("arithmeticAttempt");
+//		Iterable<ArithmeticAttempt> result = arithmeticAttemptRepository.findAll(qQuery.user.alias.eq(alias));
+		
+//		Query query = new Query();
+//		query.addCriteria(Criteria.where("alias").is(alias));
+//		List<User> users = mongoTemplate.find(query, User.class);
+		Query query = new Query();
+		query.addCriteria(Criteria.where("user.alias").is(alias));
+		Iterable<ArithmeticAttempt> result = mongoTemplate.find(query, ArithmeticAttempt.class);
 		return result;
 	}
+	
+	
+	
 }

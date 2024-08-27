@@ -20,7 +20,7 @@
 		<start-class>
 			happylearning.arithmeticservice.HappyLearningArithmeticApplication</start-class>
 		<spring-cloud.version>2023.0.2</spring-cloud.version>
-		
+
 	</properties>
 	<dependencies>
 		<!-- This dependency is used for retrieving configuration data from a
@@ -112,9 +112,11 @@
 					<execution>
 						<goals>
 							<goal>process</goal>
-							
+
 						</goals>
 						<configuration>
+							<!--<outputDirectory>
+								target/generated-sources/annotations</outputDirectory>-->
 							<outputDirectory>
 								target/generated-sources/annotations</outputDirectory>
 							<processor>

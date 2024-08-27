@@ -1,5 +1,7 @@
 package happylearning.arithmeticservice.repository;
 
+import java.util.List;
+
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
@@ -19,4 +21,11 @@ import happylearning.arithmeticservice.entity.ArithmeticAttempt;
  */
 public interface ArithmeticAttemptRepository extends MongoRepository<ArithmeticAttempt, String>, QuerydslPredicateExecutor<ArithmeticAttempt>{
 	public ArithmeticAttempt findByUserAlias(String alias);
+	
+	public List<ArithmeticAttempt> findByCorrect(boolean correct);
+	
+	//public List<ArithmeticAttempt> findByCreatedAtStartingWith(String regexp);
+	
+	
+	
 }
