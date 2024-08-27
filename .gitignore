@@ -3,20 +3,31 @@ HELP.md
 *.class
 *.jar
 *.jar.original
+*.lst
 ### ignore part of the files under target/ ###
 ### ###
-# target/maven-archiver/**
-# target/maven-archiver/*
-# target/maven-archiver/
-# target/maven-status/**
-# target/maven-status/*
-# target/maven-status/
+target/maven-archiver/**
+target/maven-archiver/
+target/maven-status/**
+target/maven-status/
+target/classes/**
+target/test-classes/**
+target/classes/
+target/test-classes/
+target/surefire-reports/
 
+**/target/maven-archiver/**
+**/target/maven-archiver/
+**/target/maven-status/**
+**/target/maven-status/
+**/target/classes/
+**/target/test-classes/
+**/target/surefire-reports/
 # target/*.jar
 
-target/
+# target/
 !target/generated-sources/
-
+!target/generated-sources/annotations/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
