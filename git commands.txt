@@ -40,3 +40,15 @@ git branch -M main
 git remote add origin https://github.com/manolopzy/happy-leaning-microservice-2024.git
 git push -u origin main
 
+
+to ignore everything except the bin directory and its contents:
+/*
+!bin/
+
+
+The ** pattern ignores everything recursively, including subfolders and their contents.
+The ! symbol negates the pattern, allowing you to exclude specific directories or files.
+The * wildcard selector matches any characters, allowing you to specify file extensions or suffixes.
+Be careful when using negated patterns, as they can be prone to unexpected behavior.
+
+

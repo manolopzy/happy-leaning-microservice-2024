@@ -1,5 +1,22 @@
 HELP.md
+### ignore all .class files ###
+*.class
+*.jar
+*.jar.original
+### ignore part of the files under target/ ###
+### ###
+# target/maven-archiver/**
+# target/maven-archiver/*
+# target/maven-archiver/
+# target/maven-status/**
+# target/maven-status/*
+# target/maven-status/
+
+# target/*.jar
+
 target/
+!target/generated-sources/
+
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/

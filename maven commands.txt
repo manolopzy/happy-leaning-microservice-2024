@@ -8,7 +8,7 @@ mvn clean package docker:build
 
 3, Cleaning builds
 mvn clean
-This commands will eliminate all jars built previouslym
+This commands will eliminate all jars built previously
 
 
 4, command : mvn clean package
