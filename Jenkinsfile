@@ -8,18 +8,14 @@ pipeline {
 				git 'https://github.com/manolopzy/happy-leaning-microservice-2024.git'
 			}
         }
-        stage('Build') {
+        stage('Building Jars with Maven') {
 			steps {
 				//sh 'mvn clean package'
 				//sh is for linux shell, bat is for Windows known as batch command file
 				bat 'mvn clean install -Dmaven.test.skip=true'
 			}
         }
-        stage('Test') {
-			steps {
-				bat 'mvn test'
-			}
-        }
+        
         //stage('Package') {
             //steps {
 			//	sh 'mvn package'
@@ -40,7 +36,7 @@ pipeline {
 	      //}
     	//}
     	
-    	stage('Deploy') {
+    	stage('Building images with Docker') {
             // Replace with your deployment script
             // For example, to deploy to Docker:
             // sh 'docker compose build'
@@ -48,6 +44,12 @@ pipeline {
         	// sh 'docker push <your-docker-hub-username>/spring-boot-app:<version>'
         	steps {
 				 bat 'docker compose build'
+			}
+        }
+        
+        stage('Test') {
+			steps {
+				bat 'mvn test'
 			}
         }
     }
