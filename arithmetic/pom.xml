@@ -96,7 +96,8 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<executions>
+				<!-- 
+					<executions>
 					<execution>
 						<id>pre-integration-test</id>
 						<goals>
@@ -116,6 +117,7 @@
 						</configuration>
 					</execution>
 				</executions>
+				-->
 				<configuration>
 					<excludes>
 						<exclude>
@@ -133,8 +135,8 @@
 					<!-- Skip integration tests
 					mvn install -Dskip.it=true-->
 					<skipITs>${skip.it}</skipITs>
-					<skipTests>${skip.it}</skipTests>skipTests>>
-				</configuration>
+					<skipTests>
+					${skip.it}</skipTests>skipTests>> </configuration>
 			</plugin>
 			<plugin>
 				<groupId>com.mysema.maven</groupId>
