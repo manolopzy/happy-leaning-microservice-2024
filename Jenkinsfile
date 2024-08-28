@@ -12,7 +12,7 @@ pipeline {
 			steps {
 				//sh 'mvn clean package'
 				//sh is for linux shell, bat is for Windows known as batch command file
-				bat 'mvn install'
+				bat 'mvn clean install -Dmaven.test.skip=true'
 			}
         }
         stage('Test') {
