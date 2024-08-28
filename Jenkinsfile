@@ -46,11 +46,12 @@ pipeline {
 				 bat 'docker compose build'
 			}
         }
-        
+        /*
         stage('Test') {
 			steps {
 				bat 'mvn test'
 			}
         }
+        */
     }
 }

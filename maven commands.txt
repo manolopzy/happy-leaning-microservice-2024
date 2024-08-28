@@ -18,6 +18,12 @@ Packages the project: Compiles the source code, runs tests (if configured), and 
 5, Building a project without running tests
 mvn clean install -Dmaven.test.skip=true
 
+or using 
+<properties>
+    <maven.test.skip>true</maven.test.skip>
+</properties>
+    
+    
 mvn package:
 
 Compiles the code (if necessary)
