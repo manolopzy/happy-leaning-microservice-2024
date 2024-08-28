@@ -8,8 +8,8 @@ import happylearning.arithmeticservice.service.RandomGeneratorService;
 @Service
 public class RandomGeneratorServiceImpl implements RandomGeneratorService {
 
-	final static int MINIMUM_FACTOR = 5;
-	final static int MAXIMUM_FACTOR = 99;
+	public final static int MINIMUM_FACTOR = 5;
+	public final static int MAXIMUM_FACTOR = 99;
 
 	@Override
 	public int randomMultiplicationFactor() {

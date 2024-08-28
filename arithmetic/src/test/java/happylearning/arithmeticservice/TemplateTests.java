@@ -10,7 +10,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -157,6 +159,9 @@ Exists	findByLocationExists(boolean exists)	{"location" : {"$exists" : exists }}
 //For integration test, loading the whole spring context
 //@SpringBootTest
 //@ExtendWith(SpringExtension.class)
+
+@ConditionalOnProperty("test.run.integration") //The class will only be loaded by Spring when property test.run.integration is defined and not false.
+@Profile("integrationtest") //The class will only be loaded by Spring when profile integrationtest is active.
 public class TemplateTests {
 	@Autowired
 	private MongoTemplate mongoTemplate;
